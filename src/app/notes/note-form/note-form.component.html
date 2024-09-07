@@ -1,0 +1,22 @@
+<form [formGroup]="noteForm" (ngSubmit)="createNote()">
+  <div class="mb-2">
+    <label for="title" class="form-label">Заголовок</label>
+    <input id="title" formControlName="title" class="form-control" />
+    <div *ngIf="noteForm.get('title')?.invalid && noteForm.get('title')?.touched" class="text-danger">
+      Заголовок обязателен
+    </div>
+  </div>
+  <div class="mb-2">
+    <label for="content" class="form-label">Содержание</label>
+    <textarea id="content" formControlName="content" class="form-control"></textarea>
+    <div *ngIf="noteForm.get('content')?.invalid && noteForm.get('content')?.touched" class="text-danger">
+      Содержание обязательно
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="dateTime" class="form-label">Дата и время</label>
+    <input type="datetime-local" id="dateTime" formControlName="dateTime" class="form-control">
+  </div>
+  <button type="submit" class="btn btn-primary">Добавить заметку</button>
+</form>
+  

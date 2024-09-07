@@ -1,0 +1,23 @@
+<div class="container mt-4">
+  <h2>Теги</h2>
+  <form [formGroup]="tagForm" (ngSubmit)="createTag()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Название тега:</label>
+      <input type="text" id="name" formControlName="name" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Создать тег</button>
+  </form>
+  <div class="mt-4">
+    <h3>Список тегов</h3>
+    <ul class="list-group">
+      <li *ngFor="let tag of tags$ | async" class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          {{ tag.name }}
+        </div>
+        <div>
+          <button (click)="deleteTag(tag.id)" class="btn btn-danger btn-sm">Удалить</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

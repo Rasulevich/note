@@ -1,0 +1,19 @@
+<div class="form-group mt-3">
+  <label for="selectedTag">Выберите тег</label>
+  <div class="input-group" style="width: 300px;">
+    <select id="selectedTag" [formControl]="selectedTag" class="form-control" >
+      <option *ngFor="let tag of tags$ | async" [ngValue]="tag">{{ tag.name }}</option>
+    </select>
+    <div class="input-group-append">
+      <button type="button" (click)="addTag()" class="btn btn-secondary">Добавить тег</button>
+    </div>
+  </div>
+</div>
+  
+<div class="mt-3">
+  <span *ngFor="let tag of selectedTags">
+    {{ tag.name }}
+    <button type="button" (click)="removeTag(tag)" class="btn-sm">x</button>
+  </span>
+</div>
+  

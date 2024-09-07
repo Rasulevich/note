@@ -1,0 +1,25 @@
+<div class="container mt-4">
+  <h2>Напоминания</h2>
+  <form [formGroup]="reminderForm" (ngSubmit)="createReminder()">
+    <div class="mb-3">
+      <label for="title" class="form-label">Название</label>
+      <input type="text" id="title" formControlName="title" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="dueDate" class="form-label">Срок выполнения</label>
+      <input type="datetime-local" id="dueDate" formControlName="dueDate" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Создать напоминание</button>
+  </form>
+  <div class="mt-4">
+    <h3>Список напоминаний</h3>
+    <ul class="list-group">
+      <li *ngFor="let reminder of reminders$ | async" class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <strong>{{ reminder.title }}</strong>
+          <p class="text-danger fw-bold">Выполнить до {{ reminder.dueDate | date:'short' }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

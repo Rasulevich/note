@@ -1,0 +1,45 @@
+<div class="container mt-4">
+  <h1 class="mb-4">Заметки</h1>
+  <div *ngIf="!editingNote; else showEditForm">
+    <h3>Добавить новую заметку</h3>
+    <app-note-form (noteCreated)="createNote($event)"></app-note-form>
+    <app-tags-form [selectedTags]="selectedTags" (tagsChanged)="onTagsChanged($event)"></app-tags-form>
+  </div>
+  <ul class="list-group mb-4 mt-4">
+    <li *ngFor="let note of notes$ | async" class="list-group-item d-flex justify-content-between align-items-start">
+      <div>
+        <strong>{{ note.title }}</strong>
+        <p>{{ note.content }}</p>
+        <p>{{ note.dateTime | date : 'short'}}</p>
+        <div *ngIf="note.tags && note.tags.length">
+          <span *ngFor="let tag of note.tags">#{{ tag.name }}</span>
+        </div>
+      </div>
+      <div class="btn-group" role="group" aria-label="Note actions">
+        <button class="btn btn-warning btn-sm me-2" (click)="editNote(note)">Edit</button>
+        <button class="btn btn-danger btn-sm" (click)="deleteNote(note.id)">Delete</button>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<ng-template #showEditForm>
+  <h3>Редактировать заметку</h3>
+  <form [formGroup]="editForm" (ngSubmit)="updateNote()">
+    <div class="mb-2">
+      <label for="editTitle" class="form-label">Заголовок</label>
+      <input id="editTitle" formControlName="title" class="form-control">
+    </div>
+    <div class="mb-2">
+      <label for="editContent" class="form-label">Содержание</label>
+      <textarea id="editContent" formControlName="content" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="dateTime" class="form-label">Дата и время:</label>
+      <input type="datetime-local" id="dateTime" formControlName="dateTime" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-success me-2">Сохранить</button>
+    <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Отменить</button>
+  </form>
+  <app-tags-form [selectedTags]="editingNote?.tags" (tagsChanged)="onTagsChanged($event)"></app-tags-form>
+</ng-template>
